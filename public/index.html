@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
+    <title>Nublit Redmine</title>
+    <script src="../node_modules/powerbi-client/dist/powerbi.min.js"></script>
+  </head>
+  <body>
+    <div id="root">prueba</div>
+    <button id="btnView">View Report !</button>
+    <div id="divView">
+      <iframe id="ifrTile" width="100%" height="400"></iframe>
+    </div>
+    <script>
+      
+      function cargarPowerbi() {
+          document.getElementById('btnView').onclick = function() {
+            var iframe = document.getElementById('ifrTile');
+            var embedToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ2ZXIiOiIwLjIuMCIsImF1ZCI6Imh0dHBzOi8vYW5hbHlzaXMud2luZG93cy5uZXQvcG93ZXJiaS9hcGkiLCJpc3MiOiJQb3dlciBCSSBOb2RlIFNESyIsInR5cGUiOiJlbWJlZCIsIndjbiI6InRpY2tldHMtcGJpIiwid2lkIjoiMzEyNjg3OGUtNGM1YS00YzJlLTg5NWMtZTkyNDJkMzIxNzhiIiwicmlkIjoiOTJkMGQ4MjItOGE4Yy00OTJhLTlhZmQtOWY3NWJiMWZhYjAiLCJuYmYiOjE0OTMzMjM1NzcsImV4cCI6MTQ5MzMyNzE3N30.izcyvrKOoWJBuoXxMNylWsggPfN9IbayJybB7hiDfZo';
+            var reportId = '4964a947-857f-4c14-914d-c66e1c5713cd';
+            var embedUrl = 'https://embedded.powerbi.com/appTokenReportEmbed?reportId=' + reportId;
+            var config = {
+                type: 'report',
+                accessToken: embedToken,
+                action: "loadReport", //ver si va....
+                embedUrl: embedUrl,
+                id: reportId,
+                height: 500,
+                width: 722,
+                settings: {
+                    filterPaneEnabled: false,
+                    navContentPaneEnabled: false,
+                }
+            };
+            iframe.src = embedUrl;
+            iframe.onload = function() {config};
+            var msgTxt = JSON.stringify(config);
+                iframe.contentWindow.postMessage(msgTxt, "*");
+          };
+        };
+        
+        cargarPowerbi();
+
+      </script>
+    </body>
+</html>
